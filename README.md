@@ -1,4 +1,5 @@
 #Blackjack
+
 #CEL 
 Aplikacja webowa służy do symulacji gry w Blackjacka, 
 popularnej gry karcianej, w której celem jest zdobycie punktów jak najbliżej 21, 
