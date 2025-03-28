@@ -20,8 +20,9 @@ Jak działa:
 Interakcja z użytkownikiem pojawia się poprzez: 
 -Przyciski kontrolne: Użytkownik ma dostęp do przycisków, które umożliwiają mu: Dobieranie kart, Zatrzymywanie się, Rozpoczęcie nowej gry. 
 -Wprowadzanie kwoty zakładu: Użytkownik może wpisać kwotę, którą chce postawić przed rozpoczęciem gry. 
--Wyświetlanie wyników: Aplikacja na bieżąco wyświetla aktualne karty gracza i krupiera, ich punkty oraz stan konta gracza. 
+-Wyświetlanie wyników: Aplikacja na bieżąco wyświetla aktualne karty gracza i Dealera, ich punkty oraz stan konta gracza. 
 -Powiadomienia o wynikach: Po zakończeniu rundy, użytkownik otrzymuje informację o wyniku (wygrana, przegrana, remis) oraz aktualny stan konta.
 
 
-#NAJNOWSZE ZMIANY
+#ZMIANY Z BIEGIEM WERSJI APLIKACJI
+
