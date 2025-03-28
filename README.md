@@ -1,11 +1,13 @@
 #Blackjack
 
-#CEL 
+#CEL
+
 Aplikacja webowa służy do symulacji gry w Blackjacka, 
 popularnej gry karcianej, w której celem jest zdobycie punktów jak najbliżej 21, 
 nie przekraczając tej wartości. Gracz rywalizuje z Dealer, a także ma możliwość obstawiania pieniędzy.
 
-#ZASADA 
+#ZASADA
+
 Jak działa: 
 1.Tworzenie talii kart: Program generuje talię kart składającą się z 52 kart (cztery kolory, 13 wartości). 
 2.Rozdawanie kart: Gracz i Dealer otrzymują po dwie karty na początku gry. Gracz ma możliwość dobierania kolejnych kart (opcja "Dobierz Kartę") lub zatrzymania się (opcja "Zatrzymaj się"). 
@@ -13,7 +15,8 @@ Jak działa:
 4.Ruch Dealera: Po decyzji gracza, Dealer dobiera karty zgodnie z ustalonymi zasadami (zatrzymuje się, gdy ma 17 punktów lub więcej). 
 5.Sprawdzanie zwycięzcy: Po wykonaniu ruchów przez gracza i krupiera, program porównuje wyniki i ogłasza zwycięzcę.
 
-#INTERAKCJA Z UŻYTKOWNIKIEM 
+#INTERAKCJA Z UŻYTKOWNIKIEM
+
 Interakcja z użytkownikiem pojawia się poprzez: 
 -Przyciski kontrolne: Użytkownik ma dostęp do przycisków, które umożliwiają mu: Dobieranie kart, Zatrzymywanie się, Rozpoczęcie nowej gry. 
 -Wprowadzanie kwoty zakładu: Użytkownik może wpisać kwotę, którą chce postawić przed rozpoczęciem gry. 
