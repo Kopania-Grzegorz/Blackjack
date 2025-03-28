@@ -26,7 +26,7 @@ Interakcja z użytkownikiem pojawia się poprzez:
 
 #ZMIANY Z BIEGIEM WERSJI APLIKACJI
 
-W wersji 0.1 zostały stworzone kontenery w których będą się działy poszczególne rzeczy.
+W wersji 0.1 zostały stworzone kontenery w których będą się działy poszczególne funkcje programu.
 W wersji 0.2 dodano trzy przyciski: HIT, STAND, NEW GAME. Zostały również zastosowane i będą stosowane w przyszłości 5 zasad Clean Code: Refaktoryzacja, YAGNI(You Aren't Gonna Need It), KISS(Keep It Simple Stupid), DRY(Don't Repeat Yourself), SRP(Single Responsibility Principle).
 W wersji 0.3 dodano karty do gry oraz punktacja(wartość karty) np. J = 10 punktów, Q = 10 punktów. Zostało również dodane funkcjonalności przycisków dodanych w poprzedniej wersji. Przycisk HIT dodaje graczowi jedną kartę, przycisk STAND kończy turę gracza i zaczyna turę dealera w której dealer dobiera karty i porównuje je z kartami gracza.
 W wersji 0.4 dodano pole w którym znajdują się wszystkie rzeczy widziane przez użytkownika.
