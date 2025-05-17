@@ -34,5 +34,5 @@ W wersji 0.5 zostały usunięte wszystkie nie potrzebne komentarze z kodu.
 W wersji 0.6 zostały wprowadzone zmiany w nazwach zmiennych, funkcji oraz zaszły zmiany kosmetyczne typu zmiana czcionki lub pogrubienie tekstu.
 W wersji 0.7 zostały znalezione błędy związane z funkcjonalnością przycisków HIT oraz STAND i brakiem wyświetlania się kart.
 W wersji 0.8 dodano
-W wersji 0.9 dodano
+W wersji 0.9 W tej wersji dodano dużo ulepszeń wygladowych.
 w wersji 1 dodano
