@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blackjack Deluxe</title>
+  <style>
+
+#scene-background {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at center, #132226 20%, #0a0f11 100%);
+  overflow: hidden;
+  z-index: -2;
+}
+
+.neon-text {
+  position: absolute;
+  top: 10%;
+  width: 100%;
+  text-align: center;
+  font-size: 4em;
+  font-family: 'Orbitron', sans-serif;
+  color: #0ff;
+  text-shadow:
+    0 0 5px #0ff,
+    0 0 10px #0ff,
+    0 0 20px #0ff,
+    0 0 40px #0ff;
+  animation: flicker 2s infinite;
+}
+
+@keyframes flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    opacity: 1;
+  }
+  20%, 22%, 24%, 55% {
+    opacity: 0.4;
+  }
+}
+
+#particles {
+  width: 100vw;
+  height: 100vh;
+  display: block;
+}
+
+  html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(160deg, #102515, #03110a);
+  background-size: 400% 400%;
+  animation: bgMove 20s ease infinite;
+}
+
+@keyframes bgMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+  canvas#background {
+     position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  }
+
+  .particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: rgba(255, 215, 0, 0.3);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0) scale(1); opacity: 0.2; }
+  50% { transform: translateY(-20px) scale(1.5); opacity: 0.5; }
+  100% { transform: translateY(0) scale(1); opacity: 0.2; }
+}
+
+  .spotlight {
+    position: absolute;
+    pointer-events: none;
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, rgba(255,215,0,0.25) 0%, transparent 80%);
+    border-radius: 50%;
+    mix-blend-mode: screen;
+    z-index: 1;
+    transition: transform 0.1s linear;
+  }
+
+  .game-container {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin: auto;
+    background: linear-gradient(to bottom right, rgba(20, 10, 30, 0.85), rgba(10, 5, 15, 0.85));
+    border: 2px solid gold;
+    padding: 30px;
+    border-radius: 20px;
+    margin-top: 5vh;
+    box-shadow: 0 0 40px rgba(255, 215, 0, 0.3);
+    color: #fff;
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 3em;
+    margin-bottom: 10px;
+    color: gold;
+  }
+
+  .card {
+    width: 60px;
+    height: 90px;
+    background: white;
+    color: black;
+    font-size: 22px;
+    border-radius: 10px;
+    border: 1px solid #222;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+  }
+
+  .buttons button {
+    margin: 10px;
+    padding: 12px 24px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s;
+  }
+
+  .cards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+  .buttons button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px gold;
+  }
+
+  .hand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+  #hit { background-color: #28a745; color: white; }
+  #stand { background-color: #dc3545; color: white; }
+  #new-game { background-color: #007bff; color: white; }
+
+  input[type="number"] {
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+    width: 100px;
+    text-align: center;
+  }
+
+  #balance, #result {
+    margin-top: 15px;
+    font-weight: bold;
+    font-size: 1.2em;
+  }
+  body {
+  cursor: url('https://cdn-icons-png.flaticon.com/512/1097/1097467.png') 16 16, auto;
+}
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  background-color: gold;
+  z-index: 9999;
+  animation: confetti-fall 3s linear forwards;
+  pointer-events: none;
+  transform: rotate(45deg);
+}
+
+@keyframes confetti-fall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+}
+
+</style>
+</head>
+<body>
+<div id="scene-background">
+  <div class="neon-text">BLACKJACK</div>
+  <canvas id="particles"></canvas>
+</div>
+
+<canvas id="background"></canvas>
+<div class="spotlight" id="spotlight"></div>
+
+<div class="game-container">
+  <h1>Blackjack Deluxe</h1>
+
+  <div class="hand">
+    <h2>Gracz</h2>
+    <div id="player-score">Punkty: 0</div>
+    <div class="cards" id="player-cards"></div>
+  </div>
+
+  <div class="hand">
+    <h2>Krupier</h2>
+    <div id="dealer-score">Punkty: 0</div>
+    <div class="cards" id="dealer-cards"></div>
+  </div>
+
+  <div>
+    <label for="bet-amount">Postaw: $</label>
+    <input type="number" id="bet-amount" min="1" value="100" />
+  </div>
+  <div id="balance">Stan konta: $1000</div>
+
+  <div class="buttons">
+    <button id="hit">Dobierz kartę</button>
+    <button id="stand">Zostań</button>
+    <button id="new-game">Nowa gra</button>
+    <div id="jackpot" style="margin-top: 15px; font-size: 2em; color: #0ff; text-shadow: 0 0 10px #0ff; display: none;">JACKPOT! 🎉</div>
+
+  </div>
+
+  <div id="result"></div>
+</div>
+
+<audio autoplay loop>
+  <source src="https://cdn.pixabay.com/download/audio/2023/03/01/audio_0f2aaf73f1.mp3?filename=casino-loop-142151.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  const spotlight = document.getElementById("spotlight");
+  document.addEventListener("mousemove", (e) => {
+    spotlight.style.left = e.clientX - 150 + "px";
+    spotlight.style.top = e.clientY - 150 + "px";
+  });
+
+  // Background animation
+ // Background animation — subtle glowing particles
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const particles = [];
+for (let i = 0; i < 100; i++) {
+  particles.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    size: Math.random() * 2 + 1,
+    speedY: Math.random() * 0.5 + 0.2,
+    alpha: Math.random()
+  });
+}
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => {
+    p.y -= p.speedY;
+    if (p.y < 0) p.y = canvas.height;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255, 215, 0, ${p.alpha})`;
+    ctx.fill();
+  });
+  requestAnimationFrame(animate);
+}
+animate();
+
+  // Blackjack logic
+  const deck = [];
+  const suits = ["♠", "♣", "♥", "♦"];
+  const values = [
+    { name: "A", value: 11 }, { name: "2", value: 2 }, { name: "3", value: 3 },
+    { name: "4", value: 4 }, { name: "5", value: 5 }, { name: "6", value: 6 },
+    { name: "7", value: 7 }, { name: "8", value: 8 }, { name: "9", value: 9 },
+    { name: "10", value: 10 }, { name: "J", value: 10 },
+    { name: "Q", value: 10 }, { name: "K", value: 10 }
+  ];
+
+  let playerHand = [], dealerHand = [], playerBalance = 1000, currentBet = 0;
+
+  function createDeck() {
+    deck.length = 0;
+    for (let s of suits)
+      for (let v of values)
+        deck.push({ name: v.name, suit: s, value: v.value });
+    deck.sort(() => Math.random() - 0.5);
+  }
+
+  function dealCard(hand, elementId) {
+    const card = deck.pop();
+    hand.push(card);
+    displayCards(hand, elementId);
+  }
+
+  function displayCards(hand, elementId) {
+    const container = document.getElementById(elementId);
+    container.innerHTML = "";
+    hand.forEach(c => {
+      const div = document.createElement("div");
+      div.className = "card";
+      div.textContent = `${c.name}${c.suit}`;
+      container.appendChild(div);
+    });
+    updateScore(hand, elementId);
+  }
+
+  function updateScore(hand, elementId) {
+    let score = hand.reduce((a, b) => a + b.value, 0);
+    let aces = hand.filter(c => c.name === "A").length;
+    while (score > 21 && aces--) score -= 10;
+    document.getElementById(elementId.replace("cards", "score")).textContent = `Punkty: ${score}`;
+    return score;
+  }
+
+  function checkWinner() {
+    const ps = updateScore(playerHand, "player-cards");
+    const ds = updateScore(dealerHand, "dealer-cards");
+    let result = "";
+    if (ps > 21) {
+      result = `Przegrałeś! Straciłeś $${currentBet}.`;
+      playerBalance -= currentBet;
+    } else if (ds > 21 || ps > ds) {
+        for (let i = 0; i < 100; i++) {
+            document.getElementById("jackpot").style.display = "block";
+setTimeout(() => {
+  document.getElementById("jackpot").style.display = "none";
+}, 3000);
+  const confetti = document.createElement("div");
+  confetti.className = "confetti";  
+  confetti.style.left = Math.random() * window.innerWidth + "px";
+  confetti.style.top = "-10px";
+  confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+  confetti.style.animationDelay = (Math.random() * 1) + "s";
+  document.body.appendChild(confetti);
+  setTimeout(() => confetti.remove(), 3000);
+}
+      result = `Wygrałeś! Zyskujesz $${currentBet * 2}.`;
+      playerBalance += currentBet;
+    } else if (ps === ds) {
+      result = "Remis! Otrzymujesz zwrot stawki.";
+    } else {
+      result = `Przegrałeś! Straciłeś $${currentBet}.`;
+      playerBalance -= currentBet;
+    }
+
+    if (playerBalance <= 0) {
+      result += " Masz znowu $1000 (dar od Elona Muska).";
+      playerBalance = 1000;
+    }
+
+    document.getElementById("result").textContent = result;
+    document.getElementById("balance").textContent = `Stan konta: $${playerBalance}`;
+  }
+
+  function dealerTurn() {
+    while (updateScore(dealerHand, "dealer-cards") < 17) {
+      dealCard(dealerHand, "dealer-cards");
+    }
+    checkWinner();
+  }
+
+  document.getElementById("new-game").addEventListener("click", () => {
+    playerHand = [];
+    dealerHand = [];
+    document.getElementById("player-cards").innerHTML = "";
+    document.getElementById("dealer-cards").innerHTML = "";
+    document.getElementById("player-score").textContent = "Punkty: 0";
+    document.getElementById("dealer-score").textContent = "Punkty: 0";
+    document.getElementById("result").textContent = "";
+
+    currentBet = parseInt(document.getElementById("bet-amount").value);
+    if (isNaN(currentBet) || currentBet <= 0 || currentBet > playerBalance) {
+      alert("Podaj poprawną kwotę!");
+      return;
+    }
+
+    createDeck();
+    dealCard(playerHand, "player-cards");
+    dealCard(playerHand, "player-cards");
+    dealCard(dealerHand, "dealer-cards");
+  });
+
+  document.getElementById("hit").addEventListener("click", () => {
+    dealCard(playerHand, "player-cards");
+    if (updateScore(playerHand, "player-cards") > 21) checkWinner();
+  });
+
+  document.getElementById("stand").addEventListener("click", dealerTurn);
+  const particleContainer = document.createElement('div');
+  document.body.appendChild(particleContainer);
+
+  for (let i = 0; i < 80; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.top = Math.random() * window.innerHeight + 'px';
+    p.style.left = Math.random() * window.innerWidth + 'px';
+    p.style.animationDelay = (Math.random() * 5) + 's';
+    particleContainer.appendChild(p);
+  }
+</script>
+</body>
+</html>
